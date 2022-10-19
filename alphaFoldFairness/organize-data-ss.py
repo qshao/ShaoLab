@@ -6,10 +6,15 @@ import numpy
 name=sys.argv[1]
 
 pdb_name=name+".pdb"
-ss_name=name+".dat"
+ss_name=name+".dssp"
 out_name=name+".out"
 
-file_ss=open(ss_name,"r")
+try:
+    file_ss=open(ss_name,"r")
+except:
+    ss_name=name+".dat"
+    file_ss=open(ss_name,"r")
+
 file_out=open(out_name,"w+")
 
 # skip the first 28 line for the secondary structure file
@@ -23,4 +28,4 @@ with open(pdb_name) as file_pdb:
         ss=file_ss.readline()[16]
         if (ss==' '):
           ss='~'
-        print(line.split()[3],line.split()[10],ss,file=file_out)
+        print(line.split()[3],line.split()[-2],ss,file=file_out)
